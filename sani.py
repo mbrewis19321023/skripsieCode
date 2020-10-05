@@ -1,0 +1,252 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+
+
+# begin importing of standard modules
+import re
+import random
+import os
+import tkinter as tk
+from tkinter import messagebox
+import pandas as pd
+import pprint as pp
+import sys
+# end importing of standard modules
+
+##############################################################################################################################################################################################################################
+
+# begin setting of home path variable and adding data directory to path import list
+if 'sani.ipynb' or 'sani.py' in os.listdir():
+    home = os.getcwd()     
+sys.path.append(os.path.join(home, 'data')) #This will add the data folder to the path variable so modules can be imported 
+# end setting of home path variable and adding data directory to path import list
+
+##############################################################################################################################################################################################################################
+
+# begin importing of path module
+try:
+    os.chdir('data')
+#     yes = input('#3 \n') #This was used to debug code
+    import path
+except FileNotFoundError:
+#     yes = input('#4 \n') #This was used to debug code
+#     print('The data directory does not exist yet')
+    pass
+except ModuleNotFoundError:
+#     yes = input('#5 \n') #This was used to debug code
+#     print('The module path.py does not exist')
+    pass
+# end importing of path module
+
+##############################################################################################################################################################################################################################
+
+# begin creation of path module nad data directory
+try:
+    os.chdir(home)
+    os.mkdir('data')
+    os.chdir('data')
+    fileObj = open('path.py', 'w')
+    fileObj.write('home = ' + pp.pformat(home) + '\n')
+    fileObj.write('repos = ' + pp.pformat(os.path.join(home, 'stdRepos')) + '\n')
+    fileObj.write('data = ' + pp.pformat(os.path.join(home, 'data')) + '\n')
+    fileObj.close()
+    import path
+except FileExistsError:
+#     print('The data dir already exists and cannot be made')
+    pass
+# end creation of path module nad data directory
+
+##############################################################################################################################################################################################################################
+
+# begin switch path to home
+os.chdir(path.home)
+# end switch path to home
+
+##############################################################################################################################################################################################################################
+
+# begin regex initilization
+stdNumRegex = re.compile(r'_(\d{8}$)')
+replaceList = re.compile(r"(\[')(\d{8})('\])")
+rg = re.compile(r'\d{8}')
+# end regex initilization
+
+##############################################################################################################################################################################################################################
+
+# begin of defunt code
+# def windowPop (title, message, typeofWindow):
+#     root = tk.Tk()
+#     root.withdraw()
+#     if typeofWindow == 'ask':
+#         return messagebox.askyesnocancel(title, message)
+#     elif typeofWindow == 'say':
+#         messagebox.showinfo(title, message)
+# end of defunct code
+
+##############################################################################################################################################################################################################################
+
+# begin creation of stdRepos directory
+if  'stdRepos' not in os.listdir():
+    ans = input('''There is no directory named stdRepos! For the sanitation process to work 
+the stdRepos folder must be in the same directory as the program. 
+Would you like to create this directory?
+    
+[y\\n]
+
+''')
+    
+    if ans == 'y':
+        os.mkdir('stdRepos')
+        input('''
+The stdRepos directory has been created! 
+Please unzip all student repositories in the stdRepos directory!
+
+Type any key to exit...
+
+''')
+        sys.exit()
+    elif ans == 'n':
+        sys.exit()
+# end creation of stdRepos directory
+
+##############################################################################################################################################################################################################################
+
+# begin defuct code
+# # Goes through all the folders in the root directory and flags the existence of the needed folder
+# if 'sani.ipynb' in (os.listdir()):
+#     for filename in os.listdir():
+#         if filename == ('stdRepos'):
+#             flagForName = 1
+#      
+
+#     # CODE MARK 1 # If the folder does not exist gicve the user the option to make the folder
+#     if flagForName == 0:
+#         answer = windowPop ("Warning", "There is no directory named 'stdRepos'! For the sanitation process to work the stdRepos folder must be in the same directory as the program. Would you like to create this directory?", 'ask')
+#         if answer == True:
+#             os.mkdir('stdRepos')
+#             windowPop("Note", "The folder 'stdRepos' has been created! Paste all unzipped student repositories to begin sanitation process and run this program again", 'say')
+#             sys.exit()
+#         else:
+#             pass
+#     
+
+
+# if flagForName == True:
+#     try:
+#         os.chdir('stdRepos')
+#     except FileNotFoundError:
+#         windowPop("Note", 'Make sure that the program shares a parent directory with stdRepos' , 'say')
+# end defuct code
+
+##############################################################################################################################################################################################################################
+
+# begin creation of list with all student numbers in path.repos folder
+# if there is an invalid problem error 3.2 will display in terminal
+os.chdir(path.repos)
+newList = list(filter(rg.findall, os.listdir()))
+os.chdir(path.home)
+# end creation of list with all student numbers in path.repos folder
+
+##############################################################################################################################################################################################################################
+
+# begin the population of dict with student numbers and creation of the ds.py module
+os.chdir(path.repos)
+if newList: # This will check that there is actually something in the stdRepos file that is a student number
+    
+    dictStd = {} 
+    listOfIndexes = []
+    j = 0
+    
+    for i in os.listdir(): # This for loop creates a list of idexes equal to the number of student repositories
+        listOfIndexes.append(j)
+        j += 1
+
+    random.shuffle(listOfIndexes) # This ensures that the indexes are randomly linked to student numbers
+    j = 0
+    
+    for i in os.listdir(): # This for loop will assign a hash value to a student number key in the dictionary
+        dictStd.setdefault(replaceList.sub(r'\2', str(stdNumRegex.findall(i))), '#' + str(listOfIndexes[j]))
+        j += 1
+    # This code will create the ds module
+    os.chdir(path.data)
+    fileObj = open('ds.py', 'w')
+    fileObj.write('dictStd = ' + pp.pformat(dictStd) + '\n')
+    fileObj.close()
+    os.chdir(path.home)
+# end the population of dict with student numbers and creation of the ds.py module
+
+##############################################################################################################################################################################################################################
+
+# begin creation of ds module containing all the student numbers 
+try:
+    os.chdir(path.data)
+    import ds
+    yes = input('Student numbers detected and subsequent hash codes created and linked! \n') #This was used to debug code
+    dictStd = ds.dictStd
+except ModuleNotFoundError:
+#     print('import ds did not work')
+    yes = input('#Error 3.2: import ds did not work module not found \nMake sure there is a valid student repository in the stdRepos folder \n') #This was used to debug code
+except FileNotFoundError:
+#     print('data directory does not exist yet')
+    yes = input('#Error 3.3: data directory does not exist yet\n') #This was used to debug code
+# end creation of ds module containing all the student numbers 
+
+##############################################################################################################################################################################################################################
+
+# begin the creation of a data frame from the dictionery
+try:
+    df = pd.DataFrame(ds.dictStd.items())
+    df.rename(columns={0: "std", 1: "hsh"}, inplace = True)
+    yes = input('#df was created\n') #This was used to debug code
+except NameError:
+    yes = input('#Error 4.1: Name Error\n') #This was used to debug code
+    pass
+#end the creation of a data frame from the dictionery
+
+##############################################################################################################################################################################################################################
+
+# begin renaming of all folders to hash codes
+os.chdir(path.repos)
+for x, i in enumerate (os.listdir()):
+    try:
+        os.rename(i, df.iloc[x][1])
+    except FileExistsError:
+        print("Already renamed")
+    except NameError:
+        print("The Data Frame has not been initilazed")
+# end renaming of all folders to hash codes
+
+##############################################################################################################################################################################################################################
+
+# begin adding of columns to frame
+df['rightFormat'] = False
+# end adding of columns to frame
+
+##############################################################################################################################################################################################################################
+
+# begin detection of perfect repos
+for i , filename in enumerate (os.listdir()):
+    os.chdir(path.repos) #goes back to stdRepos 
+    os.listdir(os.path.join(path.repos , '#' + str(i))) #This shows the content of each #number
+    if os.listdir(os.path.join(path.repos , '#' + str(i))).count('Core' and 'Debug' and 'Drivers') == 1:
+        df.loc[df['hsh'] == '#' + str(i), ['rightFormat']] = True
+# end detection of perfect repos
+
+##############################################################################################################################################################################################################################
+
+# begin storing data frame
+os.chdir(path.data)
+df.to_csv('rigthFormat.csv')
+# end storing data frame
+
+##############################################################################################################################################################################################################################
+
+
+# In[2]:
+
+
+ds.dictStd.items()
+
