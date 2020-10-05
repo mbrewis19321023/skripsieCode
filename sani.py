@@ -202,7 +202,7 @@ try:
     df.rename(columns={0: "std", 1: "hsh"}, inplace = True)
     yes = input('#df was created\n') #This was used to debug code
 except NameError:
-    yes = input('#Error 4.1: Name Error\n') #This was used to debug code
+#     yes = input('#Error 4.1: Name Error\n') #This was used to debug code
     pass
 #end the creation of a data frame from the dictionery
 
@@ -210,13 +210,17 @@ except NameError:
 
 # begin renaming of all folders to hash codes
 os.chdir(path.repos)
-for x, i in enumerate (os.listdir()):
-    try:
-        os.rename(i, df.iloc[x][1])
-    except FileExistsError:
-        print("Already renamed")
-    except NameError:
-        print("The Data Frame has not been initilazed")
+for i in os.listdir():
+    for x, row in df.iterrows():
+        try:
+            if df.iloc[x][0] in stdNumRegex.findall(i):
+                os.rename(i, df.iloc[x][1])
+            else:
+                pass
+        except FileExistsError:
+            print("Already renamed")
+        except NameError:
+            print("The Data Frame has not been initilazed")
 # end renaming of all folders to hash codes
 
 ##############################################################################################################################################################################################################################
@@ -228,11 +232,11 @@ df['rightFormat'] = False
 ##############################################################################################################################################################################################################################
 
 # begin detection of perfect repos
-for i , filename in enumerate (os.listdir()):
+for x , i in enumerate (os.listdir()):
     os.chdir(path.repos) #goes back to stdRepos 
-    os.listdir(os.path.join(path.repos , '#' + str(i))) #This shows the content of each #number
-    if os.listdir(os.path.join(path.repos , '#' + str(i))).count('Core' and 'Debug' and 'Drivers') == 1:
-        df.loc[df['hsh'] == '#' + str(i), ['rightFormat']] = True
+    os.listdir(os.path.join(path.repos ,  str(i))) #This shows the content of each #number
+    if os.listdir(os.path.join(path.repos ,  str(i))).count('Core' and 'Debug' and 'Drivers') == 1:
+        df.loc[df['hsh'] == str(i), ['rightFormat']] = True
 # end detection of perfect repos
 
 ##############################################################################################################################################################################################################################
@@ -248,5 +252,27 @@ df.to_csv('rigthFormat.csv')
 # In[2]:
 
 
-ds.dictStd.items()
+df
+
+
+# In[3]:
+
+
+
+os.listdir()
+
+
+# In[4]:
+
+
+for i in os.listdir():
+    if df.iloc[1][0] in stdNumRegex.findall(i):
+        print('yes')
+        print(stdNumRegex.findall(i))
+
+
+# In[5]:
+
+
+df.iloc[0][1]
 
