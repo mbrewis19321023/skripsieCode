@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 
@@ -91,7 +91,7 @@ rg = re.compile(r'\d{8}')
 # begin creation of stdRepos directory
 if  'stdRepos' not in os.listdir():
     ans = input('''There is no directory named stdRepos! For the sanitation process to work 
-the stdRepos folder must be in the same directory as the program. 
+the stdRepos folder must be in the same directory as sani.py. 
 Would you like to create this directory?
     
 [y\\n]
@@ -102,7 +102,7 @@ Would you like to create this directory?
         os.mkdir('stdRepos')
         input('''
 The stdRepos directory has been created! 
-Please unzip all student repositories in the stdRepos directory!
+Please unzip all student repositories in the stdRepos directory and run sani.py again!
 
 Type any key to exit...
 
@@ -152,6 +152,25 @@ os.chdir(path.home)
 
 ##############################################################################################################################################################################################################################
 
+# begin checking that there is nothing else in the stdRepos directory but valid folders
+os.chdir(path.repos)
+invalidFiles = []
+for i in os.listdir():
+    if not stdNumRegex.search(i):
+       invalidFiles.append(i)
+    else:
+        pass
+  
+if invalidFiles:
+    print('The following are invalid files in the stdRepos directory: \n')
+    for i in invalidFiles:
+        print(i)
+    input('\n Delete these files and try again \nType any key to exit... \n')
+    sys.exit()
+# end checking that there is nothing else in the stdRepos directory but valid folders
+
+###########################################################################################################
+
 # begin the population of dict with student numbers and creation of the ds.py module
 os.chdir(path.repos)
 if newList: # This will check that there is actually something in the stdRepos file that is a student number
@@ -188,7 +207,7 @@ try:
     dictStd = ds.dictStd
 except ModuleNotFoundError:
 #     print('import ds did not work')
-    yes = input('#Error 3.2: import ds did not work module not found \nMake sure there is a valid student repository in the stdRepos folder \n') #This was used to debug code
+    yes = input('#Error 3.2: import ds did not work module not found \nMake sure there is a valid student repository in the stdRepos folder and that it is unzipped! \n') #This was used to debug code
 except FileNotFoundError:
 #     print('data directory does not exist yet')
     yes = input('#Error 3.3: data directory does not exist yet\n') #This was used to debug code
@@ -249,30 +268,8 @@ df.to_csv('rigthFormat.csv')
 ##############################################################################################################################################################################################################################
 
 
-# In[2]:
+# In[1]:
 
 
-df
-
-
-# In[3]:
-
-
-
-os.listdir()
-
-
-# In[4]:
-
-
-for i in os.listdir():
-    if df.iloc[1][0] in stdNumRegex.findall(i):
-        print('yes')
-        print(stdNumRegex.findall(i))
-
-
-# In[5]:
-
-
-df.iloc[0][1]
+print('\n' * 50)
 
