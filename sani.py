@@ -31,14 +31,14 @@ sys.path.append(os.path.join(home, 'data')) #This will add the data folder to th
 try:
     os.chdir('data')
 #     yes = input('#3 \n') #This was used to debug code
-    import path
+    import mypath
 except FileNotFoundError:
 #     yes = input('#4 \n') #This was used to debug code
 #     print('The data directory does not exist yet')
     pass
 except ModuleNotFoundError:
 #     yes = input('#5 \n') #This was used to debug code
-#     print('The module path.py does not exist')
+#     print('The module mypath.py does not exist')
     pass
 # end importing of path module
 
@@ -49,12 +49,12 @@ try:
     os.chdir(home)
     os.mkdir('data')
     os.chdir('data')
-    fileObj = open('path.py', 'w')
+    fileObj = open('mypath.py', 'w')
     fileObj.write('home = ' + pp.pformat(home) + '\n')
     fileObj.write('repos = ' + pp.pformat(os.path.join(home, 'stdRepos')) + '\n')
     fileObj.write('data = ' + pp.pformat(os.path.join(home, 'data')) + '\n')
     fileObj.close()
-    import path
+    import mypath
 except FileExistsError:
 #     print('The data dir already exists and cannot be made')
     pass
@@ -63,7 +63,7 @@ except FileExistsError:
 ##############################################################################################################################################################################################################################
 
 # begin switch path to home
-os.chdir(path.home)
+os.chdir(mypath.home)
 # end switch path to home
 
 ##############################################################################################################################################################################################################################
@@ -146,15 +146,15 @@ Type any key to exit...
 
 # begin creation of list with all student numbers in path.repos folder
 # if there is an invalid problem error 3.2 will display in terminal
-os.chdir(path.repos)
+os.chdir(mypath.repos)
 newList = list(filter(rg.findall, os.listdir()))
-os.chdir(path.home)
+os.chdir(mypath.home)
 # end creation of list with all student numbers in path.repos folder
 
 ##############################################################################################################################################################################################################################
 
 # begin checking that there is nothing else in the stdRepos directory but valid folders
-os.chdir(path.repos)
+os.chdir(mypath.repos)
 invalidFiles = []
 for i in os.listdir():
     if not stdNumRegex.search(i) and not validHash.search(i):
@@ -173,7 +173,7 @@ if invalidFiles:
 ###########################################################################################################
 
 # begin the population of dict with student numbers and creation of the ds.py module
-os.chdir(path.repos)
+os.chdir(mypath.repos)
 if newList: # This will check that there is actually something in the stdRepos file that is a student number
     
     dictStd = {} 
@@ -191,18 +191,18 @@ if newList: # This will check that there is actually something in the stdRepos f
         dictStd.setdefault(replaceList.sub(r'\2', str(stdNumRegex.findall(i))), '#' + str(listOfIndexes[j]))
         j += 1
     # This code will create the ds module
-    os.chdir(path.data)
+    os.chdir(mypath.data)
     fileObj = open('ds.py', 'w')
     fileObj.write('dictStd = ' + pp.pformat(dictStd) + '\n')
     fileObj.close()
-    os.chdir(path.home)
+    os.chdir(mypath.home)
 # end the population of dict with student numbers and creation of the ds.py module
 
 ##############################################################################################################################################################################################################################
 
 # begin creation of ds module containing all the student numbers 
 try:
-    os.chdir(path.data)
+    os.chdir(mypath.data)
     import ds
 #     yes = input('Student numbers detected and subsequent hash codes created and linked! \n') #This was used to debug code
     dictStd = ds.dictStd
@@ -229,7 +229,7 @@ except NameError:
 ##############################################################################################################################################################################################################################
 
 # begin renaming of all folders to hash codes
-os.chdir(path.repos)
+os.chdir(mypath.repos)
 for i in os.listdir():
     for x, row in df.iterrows():
         try:
@@ -253,17 +253,22 @@ df['rightFormat'] = False
 
 # begin detection of perfect repos
 for x , i in enumerate (os.listdir()):
-    os.chdir(path.repos) #goes back to stdRepos 
-    os.listdir(os.path.join(path.repos ,  str(i))) #This shows the content of each #number
-    if os.listdir(os.path.join(path.repos ,  str(i))).count('Core' and 'Debug' and 'Drivers') == 1:
+    os.chdir(mypath.repos) #goes back to stdRepos 
+    os.listdir(os.path.join(mypath.repos ,  str(i))) #This shows the content of each #number
+    if os.listdir(os.path.join(mypath.repos ,  str(i))).count('Core' and 'Debug' and 'Drivers') == 1:
         df.loc[df['hsh'] == str(i), ['rightFormat']] = True
 # end detection of perfect repos
 
 ##############################################################################################################################################################################################################################
 
 # begin storing data frame
-os.chdir(path.data)
+os.chdir(mypath.data)
 df.to_csv('rigthFormat.csv')
+input('''Success!!!
+ 
+All the folders have been renamed according to hash codes and a csv has been created in the data directory
+
+Press any key to exit...''')
 # end storing data frame
 
 ##############################################################################################################################################################################################################################
