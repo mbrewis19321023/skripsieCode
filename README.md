@@ -10,3 +10,4 @@ Version 1.5.1: renamed the path.py to mypath.py to avoid errors when using os.pa
 
 Version 2.1: Began addiding functionality for going into folders and going out of them. Tried to do so using recurring function calls. Perhaps a bad idea? Sort of working. Saved as driverFind. Next time look for a simpler way to do this. Perhaps save a place in the file tree somehow?
 
+Version 2.2: Can identify the Driver folders for a number of students in stdRepos folder. Adds the path of these Driver folders to the data frame for specific students. Pretty robust as it can go pretty far into folders. Wrote this using a recurring function call. For the next version, make sure it works on a big repository and export the frame.
