@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 
@@ -72,6 +72,7 @@ os.chdir(path.home)
 stdNumRegex = re.compile(r'_(\d{8}$)')
 replaceList = re.compile(r"(\[')(\d{8})('\])")
 rg = re.compile(r'\d{8}')
+validHash = re.compile(r'#\d{0,3}$')
 # end regex initilization
 
 ##############################################################################################################################################################################################################################
@@ -156,7 +157,7 @@ os.chdir(path.home)
 os.chdir(path.repos)
 invalidFiles = []
 for i in os.listdir():
-    if not stdNumRegex.search(i):
+    if not stdNumRegex.search(i) and not validHash.search(i):
        invalidFiles.append(i)
     else:
         pass
@@ -165,7 +166,7 @@ if invalidFiles:
     print('The following are invalid files in the stdRepos directory: \n')
     for i in invalidFiles:
         print(i)
-    input('\n Delete these files and try again \nType any key to exit... \n')
+    input('\nDelete these files and try again \nType any key to exit... \n')
     sys.exit()
 # end checking that there is nothing else in the stdRepos directory but valid folders
 
@@ -203,7 +204,7 @@ if newList: # This will check that there is actually something in the stdRepos f
 try:
     os.chdir(path.data)
     import ds
-    yes = input('Student numbers detected and subsequent hash codes created and linked! \n') #This was used to debug code
+#     yes = input('Student numbers detected and subsequent hash codes created and linked! \n') #This was used to debug code
     dictStd = ds.dictStd
 except ModuleNotFoundError:
 #     print('import ds did not work')
@@ -219,7 +220,7 @@ except FileNotFoundError:
 try:
     df = pd.DataFrame(ds.dictStd.items())
     df.rename(columns={0: "std", 1: "hsh"}, inplace = True)
-    yes = input('#df was created\n') #This was used to debug code
+#     yes = input('dataframe was created\n') #This was used to debug code
 except NameError:
 #     yes = input('#Error 4.1: Name Error\n') #This was used to debug code
     pass
@@ -266,10 +267,4 @@ df.to_csv('rigthFormat.csv')
 # end storing data frame
 
 ##############################################################################################################################################################################################################################
-
-
-# In[1]:
-
-
-print('\n' * 50)
 
