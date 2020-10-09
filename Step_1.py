@@ -4,8 +4,6 @@
 # In[1]:
 
 
-
-
 # begin importing of standard modules
 import re
 import random
@@ -20,7 +18,7 @@ import sys
 ##############################################################################################################################################################################################################################
 
 # begin setting of home path variable and adding data directory to path import list
-if 'sani.ipynb' or 'sani.py' in os.listdir():
+if 'Step_1.ipynb' or 'Step_1.py' or 'Step_1.exe' in os.listdir():
     home = os.getcwd()     
 sys.path.append(os.path.join(home, 'data')) #This will add the data folder to the path variable so modules can be imported 
 # end setting of home path variable and adding data directory to path import list
@@ -92,7 +90,7 @@ validHash = re.compile(r'#\d{0,3}$')
 # begin creation of stdRepos directory
 if  'stdRepos' not in os.listdir():
     ans = input('''There is no directory named stdRepos! For the sanitation process to work 
-the stdRepos folder must be in the same directory as sani.py. 
+the stdRepos folder must be in the same directory as Step_1 
 Would you like to create this directory?
     
 [y\\n]
@@ -103,7 +101,7 @@ Would you like to create this directory?
         os.mkdir('stdRepos')
         input('''
 The stdRepos directory has been created! 
-Please unzip all student repositories in the stdRepos directory and run sani.py again!
+Please unzip all student repositories in the stdRepos directory and run Step_1 again!
 
 Type any key to exit...
 
@@ -208,7 +206,7 @@ try:
     dictStd = ds.dictStd
 except ModuleNotFoundError:
 #     print('import ds did not work')
-    yes = input('#Error 3.2: import ds did not work module not found \nMake sure there is a valid student repository in the stdRepos folder and that it is unzipped! \n') #This was used to debug code
+    yes = input('#Error 3.2: import ds did not work module not found \nMake sure there is a valid student repository in the stdRepos folder and that it is unzipped! \nThen run Step_1 again') #This was used to debug code
 except FileNotFoundError:
 #     print('data directory does not exist yet')
     yes = input('#Error 3.3: data directory does not exist yet\n') #This was used to debug code
@@ -246,7 +244,7 @@ for i in os.listdir():
 ##############################################################################################################################################################################################################################
 
 # begin adding of columns to frame
-df['rightFormat'] = False
+df['Perfect Repository Upload'] = False
 # end adding of columns to frame
 
 ##############################################################################################################################################################################################################################
@@ -256,17 +254,19 @@ for x , i in enumerate (os.listdir()):
     os.chdir(mypath.repos) #goes back to stdRepos 
     os.listdir(os.path.join(mypath.repos ,  str(i))) #This shows the content of each #number
     if os.listdir(os.path.join(mypath.repos ,  str(i))).count('Core' and 'Debug' and 'Drivers') == 1:
-        df.loc[df['hsh'] == str(i), ['rightFormat']] = True
+        df.loc[df['hsh'] == str(i), ['Perfect Repository Upload']] = True
 # end detection of perfect repos
 
 ##############################################################################################################################################################################################################################
 
 # begin storing data frame
 os.chdir(mypath.data)
-df.to_csv('rigthFormat.csv')
+df.to_csv('data.csv')
 input('''Success!!!
  
 All the folders have been renamed according to hash codes and a csv has been created in the data directory
+
+You can now run Step_2!!
 
 Press any key to exit...''')
 # end storing data frame
