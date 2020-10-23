@@ -17,3 +17,7 @@ Version 2.3: Changed the functionality of the second program to identify the Cor
 Version 2.4: Able to go save some pinouts from a test.c file stored in the data folder. This is actual code from students. Makes a dataframe with some pin information. Currently very buggy and not able to go into each file of each student yet.
 Bugs: --Does not work for this stucture 
 GPIO_InitStruct.Pin = B1_Pin;
+
+Version 2.5: This is a rollback version. Removed all the functionality associated with 2.4 since it will nopw be added in a Step_3 instead. Also removed the redundent indexing in the data.csv file
+
+Version 3.1: Here Step_3 was added. It only works for test cases 
