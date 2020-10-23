@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 # begin importing of standard modules
@@ -261,7 +261,7 @@ for x , i in enumerate (os.listdir()):
 
 # begin storing data frame
 os.chdir(mypath.data)
-df.to_csv('data.csv')
+df.to_csv('data.csv', index = False)
 input('''Success!!!
  
 All the folders have been renamed according to hash codes and a csv has been created in the data directory

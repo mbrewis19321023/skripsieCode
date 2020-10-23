@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 # begin importing of standard modules
@@ -99,13 +99,11 @@ findDrivers2(filepath) #This is the recursive function that does the work
 
 # begin setting the dataframe to display well
 pd.set_option('max_colwidth', 200)
-df.drop(columns ='Unnamed: 0')
 # end setting the dataframe to display well
 
 ##############################################################################################################################################################################################################################
 
 # begin defucnt debugging code
-# for i in range(6):
 #     import ipdb; ipdb.set_trace()
 #     print(i)
 # os.chdir(os.path.join(mypath.repos , str('#1')))
@@ -119,6 +117,6 @@ df.drop(columns ='Unnamed: 0')
 
 # begin saving the dataframe into the csv file again
 os.chdir(mypath.data)
-df.to_csv('data.csv')
+df.to_csv('data.csv', index = False)
 # end saving the dataframe into the csv file again
 
