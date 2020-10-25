@@ -21,3 +21,5 @@ GPIO_InitStruct.Pin = B1_Pin;
 Version 2.5: This is a rollback version. Removed all the functionality associated with 2.4 since it will nopw be added in a Step_3 instead. Also removed the redundent indexing in the data.csv file
 
 Version 3.1: Here Step_3 was added. It only works for test cases 
+
+Version 3.2: Here Step_3 was modified to work for actual directories. It is very buggy and does not pick up strange pin names and LEDs for example. It also crashes when the folder is empty. A more general approuch is needed. 
