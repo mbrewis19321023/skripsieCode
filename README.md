@@ -23,3 +23,7 @@ Version 2.5: This is a rollback version. Removed all the functionality associate
 Version 3.1: Here Step_3 was added. It only works for test cases 
 
 Version 3.2: Here Step_3 was modified to work for actual directories. It is very buggy and does not pick up strange pin names and LEDs for example. It also crashes when the folder is empty. A more general approuch is needed. 
+
+Version 3.3: Working version for the identification of pins. Next step is to extract the baudrate and the clock setup 
+
+Version 3.4: Working pin ID. Confirmed in .ioc output file. Next step is baudrate and clock setup.
