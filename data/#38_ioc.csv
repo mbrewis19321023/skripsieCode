@@ -1,0 +1,12 @@
+Pin,Label
+PA10,Button3
+PA2,USART_TX
+PA3,USART_RX
+PA8,StopButton
+PA9,Button2
+PB10,RecordButton
+PB13,statusLed
+PB14,led3
+PB15,led1
+PB5,Button1
+PC4,led2

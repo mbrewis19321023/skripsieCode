@@ -1,0 +1,12 @@
+Pin,Label
+PA13,TMS
+PA14,TCK
+PA2,USART_TX
+PA3,USART_RX
+PA5,LD2
+PB1,S1 Interrupt
+PB15,S2 Interrupt
+PB2,S5 Interrupt
+PB3,SWO
+PC4,S3 Interrupt
+PC5,S4 Interrupt

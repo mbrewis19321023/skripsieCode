@@ -1,0 +1,17 @@
+Pin,Label
+PA10,Rec_Button
+PA13,TMS
+PA14,TCK
+PA2,USART_TX
+PA3,USART_RX
+PA5,LD2
+PA6,Stop_Button
+PA7,Slot_1_Button
+PA8,Slot_1_LED
+PB10,Slot_2_LED
+PB3,SWO
+PB4,Slot_3_LED
+PB5,Rec_LED
+PB8,Slot_2_Button
+PB9,Slot_3_Button
+PC13,B1

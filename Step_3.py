@@ -22,6 +22,11 @@ sys.path.append(os.path.join(home, 'data')) #This will add the data folder to th
 # end setting of home path variable and adding data directory to path import list
 
 # begin creation Regular Expressions
+stdNumRegex = re.compile(r'_(\d{8}$)')
+replaceList = re.compile(r"(\[')(\d{8})('\])")
+iocRep = re.compile(r"\w*\.ioc")
+pinRegRename = re.compile(r"(\w+)\.(GPIO_Label)=(\w+\s*\w+)")
+clockReg = re.compile(r'RCC_OscInitStruct.\w*.*\w*\s*=\s*\w*')
 validHash = re.compile(r'#\d{0,3}')
 pinRegex1 = re.compile(r'GPIO_InitStruct.Pin\s*=\s*')
 pinRegex2 = re.compile(r'(\w+)')
@@ -97,13 +102,52 @@ for i in os.listdir():
 os.chdir(mypath.repos)
 # end looping through each student repo to find the main.c file and pass it to the function that goes into main and gets the pinouts
 
+#begin function that creates csv based on clock
+def makeClock(goMain, j):
+    
+#     import ipdb; ipdb.set_trace()
+
+    try:
+        cFile1 = open(goMain) 
+        lines = cFile1.readlines()
+        for i in lines:
+            isClock = clockReg.findall(i) 
+            if isClock:
+                file = open(j + '_clock.txt', 'a+') 
+                file.write(isClock[0] + '\n') 
+                file.close()
+            else:
+                pass
+    except FileNotFoundError:
+        pass
+
+#     os.chdir(mypath.data)
+#     try:
+#         cFile1 = open('test.c') 
+#         lines = cFile1.readlines() 
+#     except FileNotFoundError:
+#         pass
+    
+    
+   
+    
+#     os.chdir(mypath.data)
+#     file = open(j + '.txt', 'w') 
+#     file.write('Hello World') 
+#     file.close() 
+#end function that creates csv based on clock
+
+
+
+
+
 #begin function that creates csv based on pinouts
-def makePins(testGoMain, j):   
+def makePins(goMain, j):   
     
     dfPins = pd.DataFrame(columns = ['Port', 'Pin', 'Mode','Pull-Type','Speed']) 
     
     try:
-        cFileT = open(testGoMain) 
+        cFileT = open(goMain) 
         lines = cFileT.readlines() 
     except FileNotFoundError:
         dfPins.to_csv(j + '_main.c.csv', index = False)
@@ -148,15 +192,16 @@ def makePins(testGoMain, j):
             pass
     
     os.chdir(mypath.data)
-    dfPins.to_csv(j + 'Pinout_main.c.csv', index = False)
+    dfPins.to_csv(j + '_pinout_main.c.csv', index = False)
 #end function that creates csv based on pinouts
 
 #begin create csv files of student pinouts
 os.chdir(mypath.repos)
 for i in os.listdir():  
 #     import ipdb; ipdb.set_trace()
-    testGoMain = df.loc[df['hsh'] == i, 'main.c Path'].values[0]
-    makePins(testGoMain, i)
+    goMain = df.loc[df['hsh'] == i, 'main.c Path'].values[0]
+    makePins(goMain, i)
+    makeClock(goMain, i)
 #end create csv files of student pinouts
 
 #begin last bit of sanitation that should actually be part of step 1
@@ -189,10 +234,6 @@ def searchIoc(lines, j):
 
 
 #This is it man
-stdNumRegex = re.compile(r'_(\d{8}$)')
-replaceList = re.compile(r"(\[')(\d{8})('\])")
-iocRep = re.compile(r"\w*\.ioc")
-pinRegRename = re.compile(r"(\w+)\.(GPIO_Label)=(\w+\s*\w+)")
 
 for i in os.listdir():
     os.chdir(mypath.repos)
@@ -218,6 +259,18 @@ for i in os.listdir():
 
 
 # In[2]:
+
+
+# os.chdir(mypath.data)
+# file = open('test.txt', 'w') 
+
+
+# file.write('Hello World') 
+
+# file.close() 
+
+
+# In[3]:
 
 
 # # iocRep.findall(os.listdir())

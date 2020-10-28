@@ -1,0 +1,10 @@
+Port,Pin,Mode,Pull-Type,Speed
+GPIOA,button_2_Pin,['IT_RISING'],['GPIO_PULLDOWN'],[]
+GPIOA,button_3_Pin,['IT_RISING'],['GPIO_PULLDOWN'],[]
+GPIOA,led_1_Pin,['OUTPUT_PP'],['GPIO_NOPULL'],['GPIO_SPEED_FREQ_LOW']
+GPIOA,led_4_Pin,['OUTPUT_PP'],['GPIO_NOPULL'],['GPIO_SPEED_FREQ_LOW']
+GPIOB,button_1_Pin,['IT_RISING'],['GPIO_PULLDOWN'],[]
+GPIOB,Stop_button_Pin,['IT_RISING'],['GPIO_PULLDOWN'],[]
+GPIOB,Record_button_Pin,['IT_RISING'],['GPIO_PULLDOWN'],[]
+led_3_GPIO_Port,led_3_Pin,['OUTPUT_PP'],['GPIO_NOPULL'],['GPIO_SPEED_FREQ_LOW']
+led_2_GPIO_Port,led_2_Pin,['OUTPUT_PP'],['GPIO_NOPULL'],['GPIO_SPEED_FREQ_LOW']

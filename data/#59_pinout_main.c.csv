@@ -1,0 +1,3 @@
+Port,Pin,Mode,Pull-Type,Speed
+B1_GPIO_Port,B1_Pin,['IT_FALLING'],['GPIO_NOPULL'],[]
+LD2_GPIO_Port,LD2_Pin,['OUTPUT_PP'],['GPIO_NOPULL'],['GPIO_SPEED_FREQ_LOW']

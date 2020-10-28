@@ -27,3 +27,5 @@ Version 3.2: Here Step_3 was modified to work for actual directories. It is very
 Version 3.3: Working version for the identification of pins. Next step is to extract the baudrate and the clock setup 
 
 Version 3.4: Working pin ID. Confirmed in .ioc output file. Next step is baudrate and clock setup.
+
+Version 3.5: Final draft version. All working except for baud rate part
